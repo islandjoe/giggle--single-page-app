@@ -1,0 +1,26 @@
+import React from 'react'
+import './SearchForm.css'
+
+const SearchForm = props => {
+  const onSubmit = (event)=> {
+    event.preventDefault()
+    props.onFormSubmit()
+  }
+
+  return (
+    <form onSubmit={onSubmit} className='search-form'>
+        <input
+          type="text"
+          onChange={(event)=> props.onSearchValueChange(event.target.value)}
+        />
+        <div>
+          <button disabled={props.isSearching}>Giggle Search</button>
+          <button onClick={props.onSingleSearchClick} disabled={props.isSearching}>
+            Tickle Me Funny
+          </button>
+        </div>
+    </form>
+  )
+}
+
+export default SearchForm
