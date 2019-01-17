@@ -22,18 +22,19 @@ class App extends React.Component {
   searchJokes(limit = 12) {
     this.setState({ isFetchingJokes: true })
 
-    fetch(`https://icanhazdadjoke.com/search?term=${this.state.searchTerm}&limit=${limit}`, {
-      method: 'GET',
-      headers: { Accept: 'application/json' }
-    })
-      .then(response => response.json())
-      .then(json => {
-        const jokes = json.results
-        this.setState({
-          jokes,
-          isFetchingJokes: false
-        })
+    let jokesAPI = `https://icanhazdadjoke.com/search?term=${this.state.searchTerm}&limit=${limit}`
+    let jokes = (json)=> {
+      const jokes = json.results
+      this.setState({
+        jokes,
+        isFetchingJokes: false
       })
+    }
+    const accept = { method: "GET", headers: { Accept: "application/json" } }
+
+    fetch(jokesAPI, accept)
+      .then(response => response.json())
+        .then(jokes)
   }
 
   onSearchChange(value) {
