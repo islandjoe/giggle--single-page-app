@@ -11,12 +11,14 @@ class App extends React.Component {
 
     this.state = {
       searchTerm: '',
-      jokes: [],
+      jokes: [''],
       isFetchingJokes: false,
+      isFirstLoad: true,
     }
 
     this.onSearchChange = this.onSearchChange.bind(this)
     this.searchJokes    = this.searchJokes.bind(this)
+    this.renderJokes    = this.renderJokes.bind(this)
   }
 
   searchJokes(limit = 12) {
@@ -40,12 +42,16 @@ class App extends React.Component {
   onSearchChange(value) {
     this.setState({ searchTerm: value  })
   }
-
   renderJokes() {
+    if (this.state.jokes[0] === '') {
+      return ''
+    }
+
     return <SearchResults jokes={this.state.jokes} />
   }
 
   render() {
+
     return (
       <div className='App'>
         <img className='logo' src='./giggle-logo.png' alt='' />
@@ -55,8 +61,7 @@ class App extends React.Component {
           isSearching={this.state.isFetchingJokes}
           onSingleSearchClick={()=> this.searchJokes(1)} />
 
-        {this.state.isFetchingJokes ? "Searching..." : this.renderJokes()}
-
+          {this.state.isFetchingJokes ? 'Searching...' : this.renderJokes()}
       </div>
     )
   }
